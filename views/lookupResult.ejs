@@ -1,0 +1,8 @@
+<h1 class="bg-dark" style="--bs-bg-opacity: .05;"> Results containing:  <%= key %></h1>
+<br>
+<p>Find <%= number %> results </p>
+<% for(result of results){%> 
+    <h3><%= result.title %> </h3>
+    <a href ='/detail/<%= result.id%>')> See more </a>
+    <hr>
+<% } %>

@@ -1,0 +1,28 @@
+<h1> <%= info.title %></h1>
+<hr>
+<div class = 'hstack gap-5'>
+    <img src = <%= 'https://image.tmdb.org/t/p/w500' + info.poster_path %>  width = 33% alt = "Poster">
+    <div class="vstack gap-1">
+        <div class="card text-bg-light mb-3" style="max-width: 18rem;">
+            <div class="card-header">Genres</div>
+            <div class="card-body">
+                <ul>
+                    <% for(key of genres){%> 
+                        <p><%= key.name %> </p> 
+                    <% } %>
+                </ul>
+            </div>
+        </div>     
+        <h5>Original Language</h5>
+        <p><%= info.original_language %></p>
+        <h5>Release Date</h5>
+        <p><%= info.release_date %></p>
+        <h5>Overview</h5>
+        <p><%= info.overview %></p>
+        <h5>Rating</h5>
+        <p><%= info.vote_average %> (for <%= info.vote_count %> votes)</p>
+        <h5>Link to Homepage</h5>
+        <a herf = <%= info.homepage %> </a>
+    </div>
+
+</div>
