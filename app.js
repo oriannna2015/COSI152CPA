@@ -1,3 +1,4 @@
+
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
@@ -5,11 +6,77 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const layouts = require("express-ejs-layouts");
 const axios = require('axios');
+const auth = require('./routes/auth');
+const session = require("express-session"); 
+const MongoDBStore = require('connect-mongodb-session')(session);
+
+
+// *********************************************************** //
+//  Loading models
+// *********************************************************** //
+
+
+
+// *********************************************************** //
+//  Connecting to the database
+// *********************************************************** //
+
+const mongoose = require( 'mongoose' );
+//const mongodb_URI = 'mongodb://localhost:27017/cs103a_todo'
+const mongodb_URI = 'mongodb+srv://oriannna2015:Oriana2015@cluster0.mvicl.mongodb.net/COSI152?retryWrites=true&w=majority'
+
+mongoose.connect( mongodb_URI, { useNewUrlParser: true, useUnifiedTopology: true } );
+// fix deprecation warnings
+//mongoose.set('useFindAndModify', false); 
+//mongoose.set('useCreateIndex', true);
+
+const db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function() {console.log("we are connected!!!")});
+
+// middleware to test is the user is logged in, and if not, send them to the login page
+const isLoggedIn = (req,res,next) => {
+  if (res.locals.loggedIn) {
+    next()
+  }
+  else res.redirect('/login')
+}
+/*
+  Load MongoDB models 
+*/
+const collection = require('./models/Collection');
+const myDish = require('./models/MyDish');
+
+
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
 var app = express();
+
+var store = new MongoDBStore({
+  uri: mongodb_URI,
+  collection: 'mySessions'
+});
+
+// Catch errors
+store.on('error', function(error) {
+  console.log(error);
+});
+
+app.use(require('express-session')({
+  secret: 'This is a secret 7f89a789789as789f73j2krklfdslu89fdsjklfds',
+  cookie: {
+    maxAge: 1000 * 60 * 60 * 24 * 7 // 1 week
+  },
+  store: store,
+  // Boilerplate options, see:
+  // * https://www.npmjs.com/package/express-session#resave
+  // * https://www.npmjs.com/package/express-session#saveuninitialized
+  resave: true,
+  saveUninitialized: true
+}));
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -22,37 +89,141 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(layouts)
+app.use(auth)
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
-  //Search for tv/movies by keyword
+// *********************************************************** //
+//  API Lookup
+// *********************************************************** //
 
-  app.get('/lookup',
+app.get('/lookup',
   (req, res, next) => {
     res.render('lookup')
   })
   app.post('/lookup',
   async (req,res,next) => {
     const {keyword} = req.body;
-    const response = await axios.get('https://api.themoviedb.org/3/search/movie?api_key=4cfc53a5c270af87890abe962dcef020&query=' + keyword)
+    const response = await axios.get("https://api.spoonacular.com/recipes/complexSearch?query=" + keyword + "&apiKey=4f26d50d624540fba0cfa90aa9a8feab")
     console.dir(response.data.length)
     res.locals.results = response.data.results
     res.locals.key = keyword
-    res.locals.number = response.data.total_results
+    res.locals.number = response.data.number
     res.render('lookupResult')
     //res.json(response.data.slice(100,105));
   })
 
-  app.get('/detail/:idnumber',
+  app.get('/detail/:id',
   async (req,res,next) => {
-    const idnumber = req.params.idnumber;
-    const response = await axios.get('https://api.themoviedb.org/3/movie/' + idnumber + '?api_key=4cfc53a5c270af87890abe962dcef020')
+    const id = req.params.id;
+    const response = await axios.get("https://api.spoonacular.com/recipes/" + id + "/information?apiKey=4f26d50d624540fba0cfa90aa9a8feab&includeNutrition=false")
     console.dir(response.data.length)
     res.locals.info = response.data
-    res.locals.genres = response.data.genres
+    res.locals.ingredients = response.data.extendedIngredients
     res.render('detail')
     //res.json(response.data.slice(100,105));
   })
+
+// *********************************************************** //
+//  Custom Dish
+// *********************************************************** //
+
+app.get('/newDish',
+isLoggedIn,
+(req,res,next) => {
+  res.render('addNewDish')
+})
+
+app.post("/newDish", 
+isLoggedIn,
+  async (req, res, next) => {
+  res.json(req.body);
+  const { title, desc} = req.body;
+  const dish = 
+    new myDish(
+      {
+        userid:res.locals.user._id,
+        title:title,
+        desc:desc,
+      }
+    )
+    await dish.save();  // stores it in the database
+    res.redirect('/shwoDish');
+});
+
+
+  app.get('/showDish',
+  isLoggedIn,
+  async (req,res,next) => {
+    try{
+      const dishes = 
+         await myDish.find({userId:res.locals.user.id})
+      res.locals.dishes = dishes;
+      res.render('showDish')
+    }catch(e){
+      next(e);
+    }
+  }
+)
+
+// *********************************************************** //
+//  Collection management
+// *********************************************************** //
+
+  app.get('/addDish/:dishId',
+   isLoggedIn,
+   async (req,res,next) => {
+    try {
+      const dishId = req.params.dishId;
+      const response = await axios.get("https://api.spoonacular.com/recipes/" + dishId + "/information?apiKey=4f26d50d624540fba0cfa90aa9a8feab&includeNutrition=false")
+      console.dir(response.data.length)
+      const data = response.data
+      const dish = 
+        new collection(
+          {
+            userid:res.locals.user._id,
+            dishId:dishId,
+            title: data.title,
+            sourceName: data.sourceName,
+            ingredients: data.extendedIngredients,
+            time: data.readyInMinutes,
+          }
+          )
+      await dish.save();
+      res.redirect('/detail/'+dishId)
+    }catch(e) {
+      next(e)
+    }
+   }
+)
+
+app.get('/mylikes',
+  isLoggedIn,
+  async (req,res,next) => {
+    try{
+      const collections = 
+         await collection.find({userId:res.locals.user.id})
+             .populate('dishId');
+      res.locals.dishes = collections;
+      res.render('showCollection')
+    }catch(e){
+      next(e);
+    }
+  }
+)
+
+app.get('/deletelikes/:itemId',
+    isLoggedIn,
+    async (req,res,next) => {
+      try {
+        const itemId = req.params.itemId;
+        await collection.deleteOne({_id:itemId});
+        res.redirect('/mylikes');
+      } catch(e){
+        next(e);
+      }
+    }
+)
 
 
 // catch 404 and forward to error handler
@@ -72,3 +243,4 @@ app.use(function(err, req, res, next) {
 });
 
 module.exports = app;
+

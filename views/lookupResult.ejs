@@ -1,8 +1,21 @@
 <h1 class="bg-dark" style="--bs-bg-opacity: .05;"> Results containing:  <%= key %></h1>
 <br>
-<p>Find <%= number %> results </p>
-<% for(result of results){%> 
-    <h3><%= result.title %> </h3>
-    <a href ='/detail/<%= result.id%>')> See more </a>
-    <hr>
-<% } %>
+<div class = "container"></div>
+    <p>Find <%= number %> results </p>
+    <div class = "row g-3">
+        <% for(result of results){%>
+            <div class = "col">
+                <div class="card" style="width: 18rem;">
+                    <img src=<%= result.image %>  width = 33%  class="card-img-top" alt = "imgae of recepie">
+                    <div class="card-body">
+                    <h5 class="card-title"><%= result.title %></h5>
+                    <a href="/detail/<%= result.id%>" class="btn btn-outline-success">See More</a>
+                    <a href="/addDish/<%= result.id%>" class="btn btn-outline-danger">Add to Favorites</a>
+                    </div>
+                </div>
+            </div> 
+        <% } %>
+    </div>
+</div>
+
+<pre><%= JSON.stringify(results,null,5) %> </pre>

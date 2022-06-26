@@ -1,0 +1,31 @@
+<h1>Create your own recepie</h1>
+<form method="post" action="/newDish">
+    name of the recepie: <input type="text" name="title" />
+    <br />
+
+    Ingredients: <input id = "ingre" type ="text" ><br><br>
+    <input type="button" value="Add Ingredient" onclick="savedata();" />
+    <div id="display"></div>
+    <br><br>
+
+    descriptions: <input type="text" name="desc" />
+    <br />
+    <input type="submit" />
+
+    <script type="text/javascript">
+        var arrIngre=new Array();
+        function savedata(){
+            var ingre = document.getElementById('ingre').value;
+            arrIngre[arrIngre.length]=ingre;
+            var content="<b>Added ingredients :</b><br>";
+            content+= [...arrIngre]+"<br><br>";
+            document.getElementById('display').innerHTML = content;
+        }
+        function returndata(){
+            return arrIngre
+        }
+    </script>
+
+
+</form>
+

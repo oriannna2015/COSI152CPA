@@ -1,28 +1,27 @@
-<h1> <%= info.title %></h1>
-<hr>
-<div class = 'hstack gap-5'>
-    <img src = <%= 'https://image.tmdb.org/t/p/w500' + info.poster_path %>  width = 33% alt = "Poster">
-    <div class="vstack gap-1">
-        <div class="card text-bg-light mb-3" style="max-width: 18rem;">
-            <div class="card-header">Genres</div>
-            <div class="card-body">
-                <ul>
-                    <% for(key of genres){%> 
-                        <p><%= key.name %> </p> 
-                    <% } %>
-                </ul>
-            </div>
-        </div>     
-        <h5>Original Language</h5>
-        <p><%= info.original_language %></p>
-        <h5>Release Date</h5>
-        <p><%= info.release_date %></p>
-        <h5>Overview</h5>
-        <p><%= info.overview %></p>
-        <h5>Rating</h5>
-        <p><%= info.vote_average %> (for <%= info.vote_count %> votes)</p>
-        <h5>Link to Homepage</h5>
-        <a herf = <%= info.homepage %> </a>
-    </div>
 
+<div class="row g-0 bg-light position-relative">
+    <div class="col-md-6 mb-md-0 p-md-4">
+        <img src=<%= info.image%> class="w-100" alt="image of the dish">
+    </div>
+    <div class="col-md-6 p-4 ps-md-0">
+        <h3 class="mt-0"><%= info.title%></h3>
+        <%= info.summary%><!--how to print this out with correct format?-->
+    </div>
 </div>
+
+<div class = "hstack gap-3">
+    <div class = "vstack gap-3">
+        <h3>Ingredients</h3>
+        <ol class="list-group list-group-numbered">
+            <% for(ingredient of ingredients){%>
+                <li class="list-group-item d-flex justify-content-between align-items-start">
+                    <div class="ms-2 me-auto">
+                    <div class="fw-bold"><%= ingredient.name%></div>
+                    <%= ingredient.original%>
+                    </div>
+                    <img href = <%= ingredient.image%>
+                </li>
+            <% } %>
+    </div>
+</div>
+
