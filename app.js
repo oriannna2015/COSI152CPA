@@ -1,4 +1,3 @@
-
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
@@ -10,11 +9,13 @@ const auth = require('./routes/auth');
 const session = require("express-session"); 
 const MongoDBStore = require('connect-mongodb-session')(session);
 
+// *********************************************************** //
+//  Loading JSON datasets
+// *********************************************************** //
 
 // *********************************************************** //
 //  Loading models
 // *********************************************************** //
-
 
 
 // *********************************************************** //
@@ -45,7 +46,9 @@ const isLoggedIn = (req,res,next) => {
   Load MongoDB models 
 */
 const collection = require('./models/Collection');
+const allDish = require('./models/allDish');
 const myDish = require('./models/MyDish');
+
 
 
 
@@ -142,7 +145,7 @@ isLoggedIn,
   const dish = 
     new myDish(
       {
-        userid:res.locals.user._id,
+        userId:res.locals.user._id,
         title:title,
         desc:desc,
       }
@@ -157,7 +160,8 @@ isLoggedIn,
   async (req,res,next) => {
     try{
       const dishes = 
-         await myDish.find({userId:res.locals.user.id})
+         await myDish.find({userId:res.locals.user._id})
+      res.json(dishes);
       res.locals.dishes = dishes;
       res.render('showDish')
     }catch(e){
@@ -178,19 +182,27 @@ isLoggedIn,
       const response = await axios.get("https://api.spoonacular.com/recipes/" + dishId + "/information?apiKey=4f26d50d624540fba0cfa90aa9a8feab&includeNutrition=false")
       console.dir(response.data.length)
       const data = response.data
-      const dish = 
+      const coll = 
         new collection(
           {
-            userid:res.locals.user._id,
+            userId:res.locals.user._id,
             dishId:dishId,
             title: data.title,
             sourceName: data.sourceName,
             ingredients: data.extendedIngredients,
             time: data.readyInMinutes,
-          }
-          )
-      await dish.save();
-      res.redirect('/detail/'+dishId)
+          })
+          await coll.save();
+        const dish = 
+          new allDish(
+            {
+              dishId:dishId,
+              title: data.title,
+              sourceName: data.sourceName,
+              ingredients: data.extendedIngredients,
+              time: data.readyInMinutes,
+            })
+          await dish.save();
     }catch(e) {
       next(e)
     }
@@ -202,9 +214,9 @@ app.get('/mylikes',
   async (req,res,next) => {
     try{
       const collections = 
-         await collection.find({userId:res.locals.user.id})
-             .populate('dishId');
+         await collection.find({userId:res.locals.user._id})
       res.locals.dishes = collections;
+      //res.json(dishes);
       res.render('showCollection')
     }catch(e){
       next(e);
@@ -212,12 +224,13 @@ app.get('/mylikes',
   }
 )
 
+
 app.get('/deletelikes/:itemId',
     isLoggedIn,
     async (req,res,next) => {
       try {
         const itemId = req.params.itemId;
-        await collection.deleteOne({_id:itemId});
+        await collection.deleteOne({dishId:itemId});
         res.redirect('/mylikes');
       } catch(e){
         next(e);
@@ -243,4 +256,3 @@ app.use(function(err, req, res, next) {
 });
 
 module.exports = app;
-

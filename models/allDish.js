@@ -1,10 +1,8 @@
-
 'use strict';
 const mongoose = require( 'mongoose' );
 const Schema = mongoose.Schema;
 
-var collectionSchema = Schema( {
-  userId: {type:Schema.Types.ObjectId, ref:'User'},
+var dishSchema = Schema( {
   dishId: String,
   title: String,
   sourceName: String,
@@ -13,4 +11,4 @@ var collectionSchema = Schema( {
   nutrition: Array,
 } );
 
-module.exports = mongoose.model( 'collectionItem', collectionSchema );
+module.exports = mongoose.model( 'DishItem', dishSchema );

@@ -8,7 +8,7 @@
                         | <%= ingredient.name %>
                 <% } %>
                 <br>
-                <a href="/detail/<%= result.id%>" class="btn btn-outline-success">See More</a>
+                <a href="/detail/<%= dish.dishId%>" class="btn btn-outline-success">See More</a>
             </div>
             <div class="col-md-2">
                 <!-- Button trigger modal -->
@@ -29,7 +29,7 @@
                             </div>
                             <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                            <a href="/deletelikes/<%= dish.id%>" class="btn btn-primary">Delete</a>
+                            <a href="/deletelikes/<%= dish.dishId%>" class="btn btn-primary">Delete</a>
                             </div>
                         </div>
                     </div>
