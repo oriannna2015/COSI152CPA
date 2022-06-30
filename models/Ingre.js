@@ -2,11 +2,10 @@
 const mongoose = require( 'mongoose' );
 const Schema = mongoose.Schema;
 
-var mydishSchema = Schema( {
+var IngreSchema = Schema( {
   userId: {type:Schema.Types.ObjectId, ref:'User'},
   dish: String,
-  referenceUrl: String,
-  desc: String,
+  ingre: String,
 } );
 
-module.exports = mongoose.model( 'MyDishItem', mydishSchema );
+module.exports = mongoose.model( 'IngreItem', IngreSchema );

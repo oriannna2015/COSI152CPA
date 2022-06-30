@@ -54,6 +54,7 @@ const myDish = require('./models/MyDish');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+const addNewDish = require('./routes/addNewDish');
 
 var app = express();
 
@@ -95,6 +96,7 @@ app.use(layouts)
 app.use(auth)
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use(addNewDish);
 
 // *********************************************************** //
 //  API Lookup
@@ -127,48 +129,6 @@ app.get('/lookup',
     //res.json(response.data.slice(100,105));
   })
 
-// *********************************************************** //
-//  Custom Dish
-// *********************************************************** //
-
-app.get('/newDish',
-isLoggedIn,
-(req,res,next) => {
-  res.render('addNewDish')
-})
-
-app.post("/newDish", 
-isLoggedIn,
-  async (req, res, next) => {
-  res.json(req.body);
-  const { title, desc} = req.body;
-  const dish = 
-    new myDish(
-      {
-        userId:res.locals.user._id,
-        title:title,
-        desc:desc,
-      }
-    )
-    await dish.save();  // stores it in the database
-    res.redirect('/shwoDish');
-});
-
-
-  app.get('/showDish',
-  isLoggedIn,
-  async (req,res,next) => {
-    try{
-      const dishes = 
-         await myDish.find({userId:res.locals.user._id})
-      res.json(dishes);
-      res.locals.dishes = dishes;
-      res.render('showDish')
-    }catch(e){
-      next(e);
-    }
-  }
-)
 
 // *********************************************************** //
 //  Collection management
