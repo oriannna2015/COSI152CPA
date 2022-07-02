@@ -47,7 +47,6 @@ const isLoggedIn = (req,res,next) => {
 */
 const collection = require('./models/Collection');
 const allDish = require('./models/allDish');
-const myDish = require('./models/MyDish');
 
 
 

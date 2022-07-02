@@ -49,6 +49,10 @@ router.get("/login", (req,res) => {
   res.render("login")
 })
 
+router.get("/Home", (req,res) => {
+  res.render("HomePage")
+})
+
 router.post('/login',
   async (req,res,next) => {
     try {
@@ -59,7 +63,7 @@ router.post('/login',
       if (isMatch) {
         req.session.username = username //req.body
         req.session.user = user
-        res.redirect('/')
+        res.redirect('/Home')
       } else {
         req.session.username = null
         req.session.user = null
@@ -73,7 +77,13 @@ router.post('/login',
 router.post('/signup',
   async (req,res,next) =>{
     try {
-      const {username,passphrase,passphrase2,age} = req.body
+      var {username,passphrase,passphrase2,profilename, avatar} = req.body
+      if (avatar == ""){
+        avatar = "https://media.istockphoto.com/vectors/cute-ghost-icon-silhouette-vector-id859891056?k=6&m=859891056&s=612x612&w=0&h=2_phi-weg0t0lJYULtwsaLBbQe8U57GaeVRKyqSO5Hw="
+      }
+      if (profilename == ""){
+        profilename = "Someone"
+      }
       if (passphrase != passphrase2){
         res.redirect('/login')
       }else {
@@ -90,13 +100,15 @@ router.post('/signup',
           const user = new User(
             {username:username,
              passphrase:encrypted,
-             age:age
+             profilename:profilename,
+             avatar:avatar,
             })
           
           await user.save()
           req.session.username = user.username
           req.session.user = user
-          res.redirect('/')
+          res.locals.user = user;
+          res.redirect('/Home')
         }
         
         

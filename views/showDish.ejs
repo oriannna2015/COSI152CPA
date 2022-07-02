@@ -1,35 +1,79 @@
+<h1>My own recepies</h1>
+<hr>
+
 <ul class="list-group">
     <% for(dish of dishes) {%>
-        <li class="list-group-item d-flex justify-content-between align-items-center">
-            <div class = "vstack gap-2">
-                <h3><%= dish.title %> </h3>
-                <h5>Ingredients:</h5>
-                <% for(ingredient of dish.ingredients) {%>
-                        | <%= ingredient.name %>
-                <% } %>
-                <br>
-                <a href= "<%= dish.referenceUrl %>" class="btn btn-light">Reference link</a>
-            </div>
-            <div class="col-md-2">
-                <!-- Button trigger modal -->
-                <button type="button" class="btn btn-outline-warning" data-bs-toggle="modal" data-bs-target="#remove">
-                    Remove From Favorites
-                </button>
-                
-                <!-- Modal -->
-                <div class="modal fade" id="remove" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Hint</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <li class="list-group-item d-flex">
+            <div class = "vstack">
+                <h3><%= dish.dish %> </h3>
+                <div class = "hstack gap-2">
+                    <div class = "vstack gap-2">
+                        <h5>Description:</h5>
+                        <%= dish.desc %>
+                    </div>
+                    <div class = "vstack gap-2">
+                        <h5>Ingredients:</h5>
+                        <% for(ingredient of dish.ingredients) {%>
+                                - <%= ingredient %><br>
+                        <% } %>
+                        <br>     
+                    </div>
+                </div>
+                <h5>Reference:</h5>
+                <%= dish.url %>
+            </div >
+
+            <div>
+                <!--Remove Button-->
+                <div>
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-outline-warning" data-bs-toggle="modal" data-bs-target="#remove">
+                        Remove From My Dishes
+                    </button>                  
+                    <!-- Modal -->
+                    <div class="modal fade" id="remove" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Hint</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                Are you sure you want to remove <%= dish.dish %> from your recepies?
+                                </div>
+                                <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                <a href="/deletedish/<%= dish._id%>" class="btn btn-primary">Delete</a>
+                                </div>
                             </div>
-                            <div class="modal-body">
-                            Are you sure to remove this recepie from the list?
-                            </div>
-                            <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                            <a href="/deleteDish/<%= dish.id%>" class="btn btn-primary">Delete</a>
+                        </div>
+                    </div>
+                </div>
+                <br><br>
+                <!--ShoppingList Button-->
+                <div>
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-outline-warning" data-bs-toggle="modal" data-bs-target="#remove">
+                        Add Ingredient to Shopping List
+                    </button>
+                    
+                    <!-- Modal -->
+                    <div class="modal fade" id="remove" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Hint</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                Choose the ingredients you want to add to the shopping list
+                                <% for(ingredient of dish.ingredients) {%>
+                                    - <%= ingredient %> <a href="/addShopping/<%= ingredient%>" class="btn-sm btn-circle">Delete</a>
+                                <% } %>
+                                </div>
+                                <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                </div>
                             </div>
                         </div>
                     </div>

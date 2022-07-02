@@ -4,13 +4,18 @@
       
         <div class="col-sm-5">
             <h2>Login</h2>
+            <br>
             <form method="post" action="/login">
-                username: <input type="text"
-                                 autocomplete="username"
-                                 name="username"><br>
-                passphrase: <input  type="password"
-                                    autocomplete="passphrase"
-                                    name="passphrase"><br>
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" autocomplete="username" name="username" id="floatingInput" placeholder="username for login">
+                    <label for="floatingInput">Username</label>
+                </div>
+                <br>
+                <div class="form-floating">
+                    <input type="password" autocomplete="passphrase" name="passphrase" class="form-control" id="floatingPassword" placeholder="Password">
+                    <label for="floatingPassword">Password</label>
+                </div>
+                <br>
                 <input type="submit">
             </form>
         </div>
@@ -21,16 +26,33 @@
       
         <div class="col-sm-5">
             <h2>Signup</h2>
+            <br>
             <form method="post" action="/signup">
-                username: <input type="text" autocomplete="username" name="username"><br>
-                password
-                   <input type="password" autocomplete="passphrase" name="passphrase"><br>
-                confirm password:
-                    <input type="password" name="passphrase2"><br>
-              
-                age: <input type="number" name="age"><br>
-              
-              
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" autocomplete="username" name="username" id="floatingInput" placeholder="username for login">
+                    <label for="floatingInput">Username</label>
+                </div>
+                <br>
+                <div class="form-floating">
+                <input type="password" name="passphrase" class="form-control" id="floatingPassword" placeholder="Password">
+                <label for="floatingPassword">Password</label>
+                </div>
+                <br>
+                <div class="form-floating">
+                <input type="password" name="passphrase2" class="form-control" id="floatingPassword2" placeholder="Password2">
+                <label for="floatingPassword">Repeat Password</label>
+                </div>
+                <br>
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" name="profilename" id="floatingInput" placeholder="ProfileName">
+                    <label for="floatingInput">Enter your name for the profile</label>
+                </div>
+                <br>
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" name="avatar" id="floatingInput" placeholder="avatar">
+                    <label for="floatingInput">Paste the link of a img that you use as the avatar</label>
+                </div>
+                <br>
                 <input type="submit">
             </form>
         </div>
