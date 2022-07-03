@@ -23,7 +23,6 @@ const MongoDBStore = require('connect-mongodb-session')(session);
 // *********************************************************** //
 
 const mongoose = require( 'mongoose' );
-//const mongodb_URI = 'mongodb://localhost:27017/cs103a_todo'
 const mongodb_URI = process.env.mongodb_URI
 const api_Key = process.env.api_Key
 
@@ -123,7 +122,7 @@ app.get('/lookup',
   app.get('/detail/:id',
   async (req,res,next) => {
     const id = req.params.id;
-    const response = await axios.get("https://api.spoonacular.com/recipes/" + id + "/information?" + + api_Key)
+    const response = await axios.get("https://api.spoonacular.com/recipes/" + id + "/information?" + api_Key)
     console.dir(response.data.length)
     res.locals.info = response.data
     res.locals.ingredients = response.data.extendedIngredients
@@ -141,7 +140,7 @@ app.get('/lookup',
    async (req,res,next) => {
     try {
       const dishId = req.params.dishId;
-      const response = await axios.get("https://api.spoonacular.com/recipes/" + dishId + "/information?apiKey=4f26d50d624540fba0cfa90aa9a8feab&includeNutrition=false")
+      const response = await axios.get("https://api.spoonacular.com/recipes/" + dishId + "/information?" + api_Key + "&includeNutrition=false")
       console.dir(response.data.length)
       const data = response.data
       const coll = 
