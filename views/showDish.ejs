@@ -53,12 +53,12 @@
                 <!--ShoppingList Button-->
                 <div>
                     <!-- Button trigger modal -->
-                    <button type="button" class="btn btn-outline-warning" data-bs-toggle="modal" data-bs-target="#remove">
+                    <button type="button" class="btn btn-outline-warning" data-bs-toggle="modal" data-bs-target="#addingre">
                         Add Ingredient to Shopping List
                     </button>
                     
                     <!-- Modal -->
-                    <div class="modal fade" id="remove" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal fade" id="addingre" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
@@ -66,9 +66,9 @@
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
-                                Choose the ingredients you want to add to the shopping list
+                                Choose the ingredients you want to add to the shopping list<br><br>
                                 <% for(ingredient of dish.ingredients) {%>
-                                    - <%= ingredient %> <a href="/addShopping/<%= ingredient%>" class="btn-sm btn-circle">Delete</a>
+                                    - <%= ingredient %> <a href="/addlist/<%= ingredient%>"  class="link-danger">Add</a><br>
                                 <% } %>
                                 </div>
                                 <div class="modal-footer">

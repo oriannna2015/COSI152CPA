@@ -24,7 +24,8 @@ const MongoDBStore = require('connect-mongodb-session')(session);
 
 const mongoose = require( 'mongoose' );
 //const mongodb_URI = 'mongodb://localhost:27017/cs103a_todo'
-const mongodb_URI = 'mongodb+srv://oriannna2015:Oriana2015@cluster0.mvicl.mongodb.net/COSI152?retryWrites=true&w=majority'
+const mongodb_URI = process.env.mongodb_URI
+const api_Key = process.env.api_Key
 
 mongoose.connect( mongodb_URI, { useNewUrlParser: true, useUnifiedTopology: true } );
 // fix deprecation warnings
@@ -54,6 +55,7 @@ const allDish = require('./models/allDish');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 const addNewDish = require('./routes/addNewDish');
+const shopping = require('./routes/shopping');
 
 var app = express();
 
@@ -96,6 +98,7 @@ app.use(auth)
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use(addNewDish);
+app.use(shopping);
 
 // *********************************************************** //
 //  API Lookup
@@ -108,7 +111,7 @@ app.get('/lookup',
   app.post('/lookup',
   async (req,res,next) => {
     const {keyword} = req.body;
-    const response = await axios.get("https://api.spoonacular.com/recipes/complexSearch?query=" + keyword + "&apiKey=4f26d50d624540fba0cfa90aa9a8feab")
+    const response = await axios.get("https://api.spoonacular.com/recipes/complexSearch?query=" + keyword + "&" + api_Key)
     console.dir(response.data.length)
     res.locals.results = response.data.results
     res.locals.key = keyword
@@ -120,7 +123,7 @@ app.get('/lookup',
   app.get('/detail/:id',
   async (req,res,next) => {
     const id = req.params.id;
-    const response = await axios.get("https://api.spoonacular.com/recipes/" + id + "/information?apiKey=4f26d50d624540fba0cfa90aa9a8feab&includeNutrition=false")
+    const response = await axios.get("https://api.spoonacular.com/recipes/" + id + "/information?" + + api_Key)
     console.dir(response.data.length)
     res.locals.info = response.data
     res.locals.ingredients = response.data.extendedIngredients

@@ -1,0 +1,45 @@
+<h1>Shopping List</h1>
+<hr>
+
+
+    <div class="container py-5 h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col col-xl-10">
+  
+          <div class="card">
+            <div class="card-body p-5">
+  
+              <form class="d-flex justify-content-center align-items-center mb-4" method="post" action="/addlist">
+                <div class="form-outline flex-fill">
+                  <div class="form-floating mb-3">
+                    <input type="text" class="form-control" autocomplete="item" name="item" id="floatingInput" placeholder="item">
+                    <label for="floatingInput">New Item</label>
+                  </div>
+                </div>
+                <button type="submit" class="btn btn-info ms-2">Add</button>
+              </form>
+  
+              <!-- Tabs content -->
+              <div class="tab-content">
+                <div class="tab-pane fade show active" role="tabpanel">
+                  <ul class="list-group mb-0">
+                    <% for(item of lists) {%>
+                      <li class="list-group-item d-flex justify-content-between align-items-center border-start-0 border-top-0 border-end-0 border-bottom rounded-0 mb-2">
+                        <div class="d-flex align-items-center">
+                          <s><%= item.item %></s>
+                        </div>
+                        <a class="btn" href="deletelist/<%= item.item %>" data-mdb-toggle="tooltip" title="Remove"> Remove</a>
+                      </li>
+                    <% } %>
+                  </ul>
+                </div>
+              </div>
+
+              <!-- Tabs content -->
+  
+            </div>
+          </div>
+  
+        </div>
+      </div>
+    </div>
