@@ -14,7 +14,7 @@ router.get('/addlist/:item',
 isLoggedIn,
 async (req,res,next) => {
  try {
-   const {item} = req.params.item;
+   const item = req.params.item;
    const coll = 
      new listitem(
        {
@@ -64,7 +64,7 @@ router.get('/deletelist/:item',
   async (req,res,next) => {
     try {
       const item = req.params.item;
-      await Dish.deleteOne({item:item});
+      await listitem.deleteOne({item:item});
       res.redirect('/shopping');
     } catch(e){
       next(e);

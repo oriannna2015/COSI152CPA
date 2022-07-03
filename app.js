@@ -23,8 +23,8 @@ const MongoDBStore = require('connect-mongodb-session')(session);
 // *********************************************************** //
 
 const mongoose = require( 'mongoose' );
-const mongodb_URI = process.env.mongodb_URI
-const api_Key = process.env.api_Key
+const mongodb_URI = "mongodb+srv://cs_sj:BrandeisSpr22@cluster0.kgugl.mongodb.net/OrianaChen?retryWrites=true&w=majority"
+const api_Key = "apiKey=4f26d50d624540fba0cfa90aa9a8feab"
 
 mongoose.connect( mongodb_URI, { useNewUrlParser: true, useUnifiedTopology: true } );
 // fix deprecation warnings
@@ -55,6 +55,7 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 const addNewDish = require('./routes/addNewDish');
 const shopping = require('./routes/shopping');
+const CD = require('./routes/CloudData');
 
 var app = express();
 
@@ -98,6 +99,7 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use(addNewDish);
 app.use(shopping);
+app.use(CD);
 
 // *********************************************************** //
 //  API Lookup
@@ -125,6 +127,7 @@ app.get('/lookup',
     const response = await axios.get("https://api.spoonacular.com/recipes/" + id + "/information?" + api_Key)
     console.dir(response.data.length)
     res.locals.info = response.data
+    res.locals.summary = JSON.stringify(response.data.summary)
     res.locals.ingredients = response.data.extendedIngredients
     res.render('detail')
     //res.json(response.data.slice(100,105));

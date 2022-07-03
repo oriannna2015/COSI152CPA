@@ -1,17 +1,47 @@
 
 <div class="row g-0 bg-light position-relative">
-    <div class="col-md-6 mb-md-0 p-md-4">
+    <div class="justify-content-center align-items-center col-md-6 mb-md-0 p-md-4 ">
         <img src=<%= info.image%> class="w-100" alt="image of the dish">
+
     </div>
     <div class="col-md-6 p-4 ps-md-0">
         <h3 class="mt-0"><%= info.title%></h3>
-        <%= info.summary%><!--how to print this out with correct format?-->
+        <p><%= summary %> </p><!--how to print this out with correct format?-->
     </div>
+    
+
 </div>
 
 <div class = "hstack gap-3">
     <div class = "vstack gap-3">
         <h3>Ingredients</h3>
+        <div>
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-outline-warning" data-bs-toggle="modal" data-bs-target="#addingre">
+                Add Ingredient to Shopping List
+            </button>
+            
+                <!-- Modal -->
+            <div class="modal fade" id="addingre" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Hint</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                        Choose the ingredients you want to add to the shopping list<br><br>
+                        <% for(ingredient of ingredients) {%>
+                            - <%= ingredient.name %> <a href="/addlist/<%= ingredient.name%>"  class="link-danger">Add</a><br>
+                        <% } %>
+                        </div>
+                        <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <ol class="list-group list-group-numbered">
             <% for(ingredient of ingredients){%>
                 <li class="list-group-item d-flex justify-content-between align-items-start">

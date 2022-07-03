@@ -26,9 +26,9 @@
                     <% for(item of lists) {%>
                       <li class="list-group-item d-flex justify-content-between align-items-center border-start-0 border-top-0 border-end-0 border-bottom rounded-0 mb-2">
                         <div class="d-flex align-items-center">
-                          <s><%= item.item %></s>
+                          <h5>   -    <%= item.item %></h5>
                         </div>
-                        <a class="btn" href="deletelist/<%= item.item %>" data-mdb-toggle="tooltip" title="Remove"> Remove</a>
+                        <a class="btn btn-outline-info" href="deletelist/<%= item.item %>" data-mdb-toggle="tooltip" title="Remove"> Remove item</a>
                       </li>
                     <% } %>
                   </ul>
