@@ -5,8 +5,8 @@
 */
 const express = require('express');
 const router = express.Router();
-const CloudData = require('../models/CloudData');
 const User = require('../models/User')
+const listitem = require('../models/listItem')
 
 
 router.post('cloud/addlist',
@@ -54,11 +54,11 @@ async (req,res,next) => {
 
 router.post('/cloud/login',
     async (req, res, next)  => {
-        const {username} = req.body;
         console.log('in /cloud/getregistration');
-        const user = await User.findOne({username})
-        console.log({user});
-        res.json(user);
+        console.dir (req.body)
+        const {username} = req.body;
+        const userdata = await User.findOne({username})
+        res.json(userdata);
 });
 
 
