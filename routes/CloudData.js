@@ -58,6 +58,7 @@ router.get('/cloud/login',
         console.log('in /cloud/getregistration');
         console.dir({username});
         const user = await User.findOne({username:username})
+        console.log({user});
         res.json(user);
 });
 
