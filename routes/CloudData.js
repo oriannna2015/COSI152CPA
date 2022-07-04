@@ -52,7 +52,7 @@ async (req,res,next) => {
 }
 )
 
-router.post('/cloud/login/:user',
+router.get('/cloud/login/:user',
     async (req, res, next)  => {
         const username = req.params.user;
         console.log('in /cloud/getregistration');
