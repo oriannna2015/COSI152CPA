@@ -52,12 +52,11 @@ async (req,res,next) => {
 }
 )
 
-router.get('/cloud/login/:user',
+router.post('/cloud/login',
     async (req, res, next)  => {
-        const username = req.params.user;
+        const {username} = req.body;
         console.log('in /cloud/getregistration');
-        console.dir({username});
-        const user = await User.findOne({username:username})
+        const user = await User.findOne({username})
         console.log({user});
         res.json(user);
 });
