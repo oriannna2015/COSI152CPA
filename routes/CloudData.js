@@ -8,26 +8,49 @@ const router = express.Router();
 const CloudData = require('../models/CloudData');
 const User = require('../models/User')
 
-/* store key/value pair in the collection for the user with specified email */
-router.post('/cloud/store', 
-    async (req, res, next)  => {
-        const {email,key,value} = req.body;
-        console.log('in /cloud/store');
-        console.dir({email,key,value});
-        const cloudData = new CloudData({email,key,value})
-        await cloudData.save()
-        res.json(cloudData)
-});
 
-/* get the list of all values associated with the particular email and key */
-router.post('/cloud/get',
-    async (req, res, next)  => {
-        console.log('in /cloud/get');
-        console.dir(req.body);
-        const {email,key} = req.body;
-        const cloudData = await CloudData.find({email,key})
-        res.json(cloudData);
-});
+router.post('cloud/addlist',
+async (req,res,next) => {
+ try {
+   const {item,id} = req.body;
+   const coll = 
+     new listitem(
+       {
+         userId:id,
+         item:item,
+       })
+       await coll.save();
+       res.json(coll);
+ }catch(e) {
+   next(e)
+ }
+})
+
+router.get('cloud/shopping',
+async (req,res,next) => {
+  try{
+    const {id} = req.body;
+    const lists = 
+       await listitem.find({userId:id})
+    res.json(lists);
+  }catch(e){
+    next(e);
+  }
+}
+)
+
+router.get('cloud/myDish',
+async (req,res,next) => {
+  try{
+    const {id} = req.body;
+    const dishes = 
+       await Dish.find({userId:id})
+    res.json(dishes);
+  }catch(e){
+    next(e);
+  }
+}
+)
 
 router.get('/cloud/login/:username',
     async (req, res, next)  => {
@@ -37,23 +60,6 @@ router.get('/cloud/login/:username',
         const user = await User.findOne({username:username})
         res.json(user);
 });
-
-/* remove all key/values pairs for the specified email */
-router.post('/cloud/clear',
-    async (req, res, next)  => {
-        const {email} = req.body;
-        const cloudData = await CloudData.deleteMany({email})
-        res.json(cloudData);
-    }
-)
-
-/* remove all key/values pairs for the specified email */
-router.get('/cloud/showAll',
-    async (req, res, next)  => {
-        const cloudData = await CloudData.find({})
-        res.json(cloudData);
-    }
-)
 
 
 module.exports = router;
