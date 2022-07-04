@@ -65,7 +65,6 @@ router.post('/cloud/login',
 router.get('/cloud/login/:user',
     async (req, res, next)  => {
         console.log('in /cloud/getregistration');
-        console.dir (req.params.user)
         const username = req.params.user;
         const userdata = await User.find({username})
         console.log('data found');
