@@ -54,13 +54,13 @@ async (req,res,next) => {
 
 router.post('/cloud/login',
     async (req, res, next)  => {
-        console.log('in /cloud/getregistration');
-        console.dir (req.body)
-        const {username} = req.body;
-        const userdata = await User.find({username})
-        console.log('data found');
-        console.log(JSON.stringify(userdata));
-        res.json(userdata);
+      console.log('in /cloud/getregistration');
+      console.dir (req.body)
+      const {username} = req.body;
+      const userdata = await User.find({username})
+      console.log('data found');
+      console.log(JSON.stringify(userdata));
+      res.send(userdata);
 });
 
 
