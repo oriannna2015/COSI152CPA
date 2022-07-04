@@ -26,7 +26,7 @@ async (req,res,next) => {
  }
 })
 
-router.get('cloud/shopping',
+router.post('cloud/shopping',
 async (req,res,next) => {
   try{
     const {id} = req.body;
@@ -39,7 +39,7 @@ async (req,res,next) => {
 }
 )
 
-router.get('cloud/myDish',
+router.post('cloud/myDish',
 async (req,res,next) => {
   try{
     const {id} = req.body;
@@ -52,7 +52,7 @@ async (req,res,next) => {
 }
 )
 
-router.get('/cloud/login/:user',
+router.post('/cloud/login/:user',
     async (req, res, next)  => {
         const username = req.params.user;
         console.log('in /cloud/getregistration');
