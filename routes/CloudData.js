@@ -59,6 +59,7 @@ router.post('/cloud/login',
         const {username} = req.body;
         const userdata = await User.find({username})
         console.log('data found');
+        console.log(JSON.stringify(userdata));
         res.json(userdata);
 });
 
