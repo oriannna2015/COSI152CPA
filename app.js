@@ -127,7 +127,7 @@ app.get('/lookup',
     const response = await axios.get("https://api.spoonacular.com/recipes/" + id + "/information?" + api_Key)
     console.dir(response.data.length)
     res.locals.info = response.data
-    res.locals.summary = JSON.stringify(response.data.summary)
+    res.locals.summary = response.data.summary
     res.locals.ingredients = response.data.extendedIngredients
     res.render('detail')
     //res.json(response.data.slice(100,105));
