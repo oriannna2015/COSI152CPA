@@ -60,7 +60,7 @@ router.post('/cloud/login',
       const userdata = await User.find({username})
       console.log('data found');
       console.log(JSON.stringify(userdata));
-      res.send(userdata);
+      res.json(userdata);
 });
 
 
