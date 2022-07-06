@@ -3,7 +3,30 @@
 
 <form method = "post" action="/lookup">
     Enter the keyword for the recepie you're looking for <br>
-    <input type="text" name="keyword" >
+    <div class = "hstack gap-5">
+        <input type="text" name="keyword" >
+        <select class="form-select" name = 'cuisine' aria-label="Default select example">
+            <option selected></option>
+            <option value="American">American</option>
+            <option value="British">British</option>
+            <option value="Indian">Indian</option>
+            <option value="Mexican">Mexican</option>
+            <option value="Spanish">Spanish</option>
+            <option value="Thai">Thai</option>
+            <option value="Japanese">Japanese</option>
+            <option value="Chinese">Chinese</option>
+            <option value="Vietnamese">Vietnamese</option>
+            <option value="Jewish">Jewish</option>
+            <option value="Irish">Irish</option>
+            <option value="Greek">Greek</option>
+        </select>
+        <select class="form-select" name = 'diet' aria-label="Default select example">
+            <option selected></option>
+            <option value="Gluten Free">Gluten Free</option>
+            <option value="Vegetarian">Vegetarian</option>
+            <option value="Vegan">Vegan</option>
+        </select></div>
+    
     <hr>
     <input type="submit" >
 </form>

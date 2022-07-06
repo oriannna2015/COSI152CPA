@@ -21,15 +21,18 @@ router.post('/newDish',
   isLoggedIn,
   async (req,res,next) => {
     try{
-        var {dish, desc,url,ingre} = req.body;
+        var {dish, desc,url,image,ingre} = req.body;
         if (url == ""){
           url = "NA"
+        }
+        if (image == ""){
+          image = "https://i.pinimg.com/564x/dd/9d/c9/dd9dc9d83423bc037b511d73b29e6b80.jpg"
         }
         const userId = res.locals.user._id;
         const ingredients = ingre.split(",")
         const newDish = 
           new Dish(
-            {userId, dish, url, desc,  ingredients});
+            {userId, dish, url, image,desc, ingredients});
         await newDish.save();
         res.redirect('/myDish')
 

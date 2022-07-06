@@ -42,16 +42,51 @@
                 </div>
             </div>
         </div>
-        <ol class="list-group list-group-numbered">
-            <% for(ingredient of ingredients){%>
-                <li class="list-group-item d-flex justify-content-between align-items-start">
-                    <div class="ms-2 me-auto">
-                    <div class="fw-bold"><%= ingredient.name%></div>
-                    <%= ingredient.original%>
-                    </div>
-                    <img href = <%= ingredient.image%>
-                </li>
-            <% } %>
+        <div class = "d-flex flex-column justify-content-start gap-5">
+            <div class = "d-flex flex-row justify-content-start gap-5">
+                <div>
+                    <ol class="list-group list-group-numbered">
+                    <% for(ingredient of ingredients){%>
+                        <li class="list-group-item d-flex justify-content-between align-items-start">
+                            <div class="ms-2 me-auto">
+                            <div class="fw-bold"><%= ingredient.name%></div>
+                            <%= ingredient.original%>
+                            </div>
+                            <img href = <%= ingredient.image%>
+                        </li>
+                    <% } %>
+                </div>
+                <ul class="list-group">
+                    <h3>Dish Tags</h3>
+                    <li class="list-group-item">
+                    <% for(cuisine of info.cuisines){%>
+                        <h3><span class="badge rounded-pill text-bg-warning"><%= cuisine%></span>
+                        </h3>
+                    <% } %>
+                    <% for(dishtype of info.dishTypes){%>
+                        <h3><span class="badge rounded-pill text-bg-info"><%= dishtype%></span>
+                        </h3>
+                    <% } %>
+                    <% for(diet of info.diets){%>
+                        <h3><span class="badge rounded-pill text-bg-success"><%= diet%></span>
+                        </h3>
+                    <% } %>
+                    </li>
+                  </ul>
+            </div>
+            <div>
+                <h3>Instructions</h3>
+                <ul class="list-group">
+                    <% for(step of instruction){%>
+                        <li class="list-group-item"><%= step.step %></li>
+                    <% } %>
+                </ul>    
+            </div>
+
+
+        </div>
+
     </div>
 </div>
+
 

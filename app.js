@@ -8,7 +8,7 @@ const axios = require('axios');
 const auth = require('./routes/auth');
 const session = require("express-session"); 
 const MongoDBStore = require('connect-mongodb-session')(session);
-
+require("dotenv").config()
 // *********************************************************** //
 //  Loading JSON datasets
 // *********************************************************** //
@@ -23,8 +23,8 @@ const MongoDBStore = require('connect-mongodb-session')(session);
 // *********************************************************** //
 
 const mongoose = require( 'mongoose' );
-const mongodb_URI = "mongodb+srv://cs_sj:BrandeisSpr22@cluster0.kgugl.mongodb.net/OrianaChen?retryWrites=true&w=majority"
-const api_Key = "apiKey=4f26d50d624540fba0cfa90aa9a8feab"
+const mongodb_URI = process.env.REACT_APP_MONGODB
+const api_Key = process.env.REACT_APP_API_KEY
 
 mongoose.connect( mongodb_URI, { useNewUrlParser: true, useUnifiedTopology: true } );
 // fix deprecation warnings
@@ -111,11 +111,19 @@ app.get('/lookup',
   })
   app.post('/lookup',
   async (req,res,next) => {
-    const {keyword} = req.body;
-    const response = await axios.get("https://api.spoonacular.com/recipes/complexSearch?query=" + keyword + "&" + api_Key)
+    var {keyword,cuisine,diet} = req.body;
+    if (keyword != ""){
+      keyword = "query="+keyword
+    }
+    if (cuisine != ""){
+      cuisine = "&cuisine="+cuisine
+    }
+    if (diet != ""){
+      cuisine = "&diet="+diet
+    }
+    const response = await axios.get("https://api.spoonacular.com/recipes/complexSearch?query=" + keyword + cuisine + diet + "&number=100&" + api_Key)
     console.dir(response.data.length)
     res.locals.results = response.data.results
-    res.locals.key = keyword
     res.locals.number = response.data.number
     res.render('lookupResult')
     //res.json(response.data.slice(100,105));
@@ -128,6 +136,7 @@ app.get('/lookup',
     console.dir(response.data.length)
     res.locals.info = response.data
     res.locals.summary = response.data.summary
+    res.locals.instruction = response.data.analyzedInstructions[0].steps
     res.locals.ingredients = response.data.extendedIngredients
     res.render('detail')
     //res.json(response.data.slice(100,105));

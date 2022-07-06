@@ -4,11 +4,11 @@
     <div class = "vstack gap-3 align-items-center">
         <img src="<%= user.avatar%>" class="rounded-circle shadow-4"
         style="width: 150px;" alt="Avatar" />
-        <p>Welcome, <%= user.profilename %> !</p>
+        <h5>Welcome, <%= user.profilename %> !</h5>
     </div>
     <hr>
 
-    <div class = "hstack gap-3  align-items-center">
+    <div class = "d-flex flex-row gap-5  align-items-center">
         <div class="card  align-items-center" style="width: 18rem;">
             <img src="https://www.creativefabrica.com/wp-content/uploads/2021/06/22/Favorite-Web-Site-Icon-Graphics-13706676-1-1-580x386.jpg" class="card-img-top" alt="see my Favorites">
             <div class="card-body">
@@ -21,6 +21,13 @@
             <div class="card-body">
                 <h5 class="card-title">My Recepies</h5>
                 <a href="/myDish" class="btn btn-dark">Go</a>
+            </div>
+        </div>
+        <div class="card align-items-center" style="width: 18rem;">
+            <img src="https://www.creativefabrica.com/wp-content/uploads/2021/06/22/Article-Blog-Icon-Graphics-13706739-1-1-580x386.jpg" class="card-img-top" alt="My Recepies">
+            <div class="card-body">
+                <h5 class="card-title">Add new recepie</h5>
+                <a href="/newDish" class="btn btn-dark">Go</a>
             </div>
         </div>
         <div class="card align-items-center" style="width: 18rem;">

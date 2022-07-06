@@ -6,12 +6,13 @@
         <li class="list-group-item d-flex">
             <div class = "vstack">
                 <h3><%= dish.dish %> </h3>
-                <div class = "hstack gap-2">
+                <div class = "hstack gap-5">
+                    <img src="<%= dish.image %>" width = 20% alt="image of the dish">
                     <div class = "vstack gap-2">
                         <h5>Description:</h5>
                         <%= dish.desc %>
                     </div>
-                    <div class = "vstack gap-2">
+                    <div class = "vstack gap-4">
                         <h5>Ingredients:</h5>
                         <% for(ingredient of dish.ingredients) {%>
                                 - <%= ingredient %><br>
@@ -23,7 +24,7 @@
                 <%= dish.url %>
             </div >
 
-            <div>
+            <div class = "d-flex flex-column justify-content-center">
                 <!--Remove Button-->
                 <div>
                     <!-- Button trigger modal -->

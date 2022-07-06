@@ -6,6 +6,7 @@ var mydishSchema = Schema( {
   userId: {type:Schema.Types.ObjectId, ref:'User'},
   dish: String,
   url: String,
+  image: String,
   desc: String,
   ingredients: Array,
 } );
