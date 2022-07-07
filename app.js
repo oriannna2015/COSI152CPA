@@ -111,22 +111,13 @@ app.get('/lookup',
   })
   app.post('/lookup',
   async (req,res,next) => {
-    var {keyword,cuisine,diet} = req.body;
-    if (keyword != ""){
-      keyword = "query="+keyword
-    }
-    if (cuisine != ""){
-      cuisine = "&cuisine="+cuisine
-    }
-    if (diet != ""){
-      cuisine = "&diet="+diet
-    }
-    const response = await axios.get("https://api.spoonacular.com/recipes/complexSearch?query=" + keyword + cuisine + diet + "&number=100&" + api_Key)
+    var {keyword} = req.body;
+    const response = await axios.get("https://api.spoonacular.com/recipes/complexSearch?query=" + keyword + "&number=100&" + api_Key)
     console.dir(response.data.length)
     res.locals.results = response.data.results
     res.locals.number = response.data.number
     res.render('lookupResult')
-    //res.json(response.data.slice(100,105));
+
   })
 
   app.get('/detail/:id',
