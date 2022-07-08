@@ -2,9 +2,17 @@
 <hr>
 
 <form method = "post" action="/lookup">
-    Enter the keyword for the recepie you're looking for <br>
+    Enter the keyword for the recipe you're looking for <br>
+    <br>
     <div class = "hstack gap-5">
-        <input type="text" name="keyword" >
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon1">Keyword</span>
+            <input type="text" name = "keyword" class="form-control" placeholder="keyword for the recepie" aria-label="url" aria-describedby="basic-addon1">
+          </div>
+          <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon1">Exclude Ingredient</span>
+            <input type="text" name = "exclude" class="form-control" placeholder="ingredients you do not want to have" aria-label="url" aria-describedby="basic-addon1">
+          </div>
     </div>
     
     <hr>

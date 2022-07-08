@@ -111,8 +111,9 @@ app.get('/lookup',
   })
   app.post('/lookup',
   async (req,res,next) => {
-    var {keyword} = req.body;
-    const response = await axios.get("https://api.spoonacular.com/recipes/complexSearch?query=" + keyword + "&number=100&" + api_Key)
+    var {keyword,exclude} = req.body;
+    const ingre = exclude.split(',')
+    const response = await axios.get("https://api.spoonacular.com/recipes/complexSearch?query=" + keyword + "&excludeIngredients=" + ingre + "&number=100&" + api_Key)
     console.dir(response.data.length)
     res.locals.results = response.data.results
     res.locals.number = response.data.number
@@ -127,10 +128,15 @@ app.get('/lookup',
     console.dir(response.data.length)
     res.locals.info = response.data
     res.locals.summary = response.data.summary
-    res.locals.instruction = response.data.analyzedInstructions[0].steps
+    if(response.data.analyzedInstructions.length === 0){
+      res.locals.instruction = new Array([])
+    }
+    else{
+      res.locals.instruction = response.data.analyzedInstructions[0].steps
+    }
     res.locals.ingredients = response.data.extendedIngredients
     res.render('detail')
-    //res.json(response.data.slice(100,105));
+
   })
 
 
