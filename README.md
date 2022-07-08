@@ -3,7 +3,9 @@ This web app provide services including recepie searching, saving of collections
 Latest update:
 - Add filter ingredient function for people with allergy as mentioned by feedback
 - Fix bug of 404 when API request get no instruction infomration (Need further test)
-:exclamation::exclamation::exclamation:API has a limit at about 100 calls as I am using free account in development. If you get error for searching try next day! :exclamation::exclamation::exclamation:
+:exclamation::exclamation::exclamation::exclamation::exclamation:
+API has a limit at about 100 calls as I am using free account in development. If you get error for searching try next day! 
+:exclamation::exclamation::exclamation::exclamation::exclamation:
 
 Functionalities:
 - Search recepie: get recepie informations by keyword and conditonal tags
