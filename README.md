@@ -1,5 +1,10 @@
 This web app provide services including recepie searching, saving of collections, upload of personal recepies and formation of shopping list.
 
+Latest update:
+- Add filter ingredient function for people with allergy as mentioned by feedback
+- Fix bug of 404 when API request get no instruction infomration (Need further test)
+:exclamation::exclamation::exclamation:API has a limit at about 100 calls as I am using free account in development. If you get error for searching try next day! :exclamation::exclamation::exclamation:
+
 Functionalities:
 - Search recepie: get recepie informations by keyword and conditonal tags
 - Favorite Lists: save recepies to your own favorite lists and have quick access to details
