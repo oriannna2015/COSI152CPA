@@ -1,5 +1,11 @@
 This web app provide services including recepie searching, saving of collections, upload of personal recepies and formation of shopping list.
 
+Package Install and source code usage:
+
+-The project is developed using react-native
+- External packages requires install in addition to react package include:session, cookie-parser, authentication, axios, and nodemon
+- To open the app locally, cd to the directory of the package and run nodemon. The app can be visited at site localhost:3000. (To simply go over the features of the app, i strongly recommand that visit through the provided public address (https://fathomless-shelf-49222.herokuapp.com/) is used to avoid issues of local environments and package install. 
+
 Latest update:
 - Add filter ingredient function for people with allergy as mentioned by feedback
 - Fix bug of 404 when API request get no instruction infomration (Need further test)
